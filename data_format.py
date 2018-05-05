@@ -157,7 +157,7 @@ class data_format:
 ##################################################
 # Clustering Part:
 
-    def clustering(self, columns='*', num_cluster=2):
+    def clustering(self, columns='*', num_cluster=2, nGram =2):
         # input data type should be string
         # let text data as string with blank space
 
@@ -174,7 +174,7 @@ class data_format:
         # Token the word and do the bi-gram
         tokenizer = Tokenizer(inputCol=columns + '_split', outputCol=columns + "_token")
         data_frame_2 = tokenizer.transform(data_frame_1)
-        ngram = NGram(n=2, inputCol=columns + "_token", outputCol=columns + "_ngram")
+        ngram = NGram(nGram=2, inputCol=columns + "_token", outputCol=columns + "_ngram")
         ngramDataFrame = ngram.transform(data_frame_2)
         # vectorization: text map to vector
         cv = CountVectorizer(inputCol=columns + "_ngram", outputCol="features", vocabSize=10, minDF=2.0)
