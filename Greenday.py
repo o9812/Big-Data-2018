@@ -8,6 +8,7 @@ from data_format import data_format
 
 class Greenday:
     def __init__(self, df):
+        self.df = df
         self.DateTimeTransformer = DateTimeTransformer(df)
         self.MissingValue = MissingValue(df)
         self.data_format = data_format(df)
