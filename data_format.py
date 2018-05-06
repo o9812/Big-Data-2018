@@ -19,24 +19,22 @@ from pyspark.sql.window import Window
 from pyspark.sql.types import StringType
 ##################################################
 
-# this work is based on open resoruce optimus. Please see: https://github.com/ironmussa/Optimus
-
 
 class data_format:
 
     def __init__(self, df):
-        assert (isinstance(df, pyspark.sql.dataframe.DataFrame)), "input type should be 'pyspark.sql.dataframe.DataFrame'"
-
+        # initial dataframe
         self._df = df
 ##################################################
 
     def show(self):
+        # incase user would like to see the dataframe
         self._df.show()
+##################################################
 
-    def clean_accent(self, columns='*'):
-
-        # if isinstance(columns, str):
-        #     columns = [columns]
+    def clean_latin(self, columns='*'):
+        # this function is based on open resoruce optimus. Please see: https://github.com/ironmussa/Optimus
+        # input a list of column
         valid_cols = [col for (col, typ) in filter(lambda typ: typ[1] == 'string', self._df.dtypes)]
 
         if columns == "*":
@@ -44,25 +42,24 @@ class data_format:
         else:
             assert isinstance(columns, list), "Error: columns argument must be a list!"
 
-        def remove_accents(input_str):
+        def remove_latin(input_str):
             # first, normalize strings:
             nfkd_str = unicodedata.normalize('NFKD', input_str)
-            # Keep chars that has no other char combined (i.e. accents chars)
-            with_out_accents = u"".join([c for c in nfkd_str if not unicodedata.combining(c)])
-            return with_out_accents
-
-        function = udf(lambda x: remove_accents(x) if x is not None else x, StringType())
+            # join the list and remove the latin words
+            with_out_latin = u"".join([c for c in nfkd_str if not unicodedata.combining(c)])
+            return with_out_latin
+        # def the function to remove latin words
+        function = udf(lambda x: remove_latin(x) if x is not None else x, StringType())
+        # apply function on column, if it is not a validated column, just return its self
         exprs = [function(col(c)).alias(c) if (c in columns) and (c in valid_cols) else c for c in self._df.columns]
-        self._df = self._df.select(*exprs)
 
-        # Returning the transformer object for able chaining operations
+        self._df = self._df.select(*exprs)
         return self
 
 ##################################################
-    def clean_spchar(self, columns='*'):
-        """This function remove special chars in string columns, such as: .!"#$%&/()
-        :param columns      list of names columns to be processed.
-        columns argument can be a string or a list of strings."""
+    def clean_sp_char(self, columns='*'):
+        # this function is based on open resoruce optimus. Please see: https://github.com/ironmussa/Optimus
+        # input a list of column, remove specila char each column
 
         valid_cols = [c for (c, t) in filter(lambda t: t[1] == 'string', self._df.dtypes)]
 
@@ -72,11 +69,7 @@ class data_format:
         else:
             assert isinstance(columns, list), "Error: columns argument must be a list!"
 
-        # If columns is string, make a list:
-        if isinstance(columns, str):
-            columns = [columns]
-
-        def rm_spec_chars(input_str):
+        def remove_sp_char(input_str):
             # Remove all punctuation and control characters
             for punct in (set(input_str) & set(string.punctuation)):
                 input_str = input_str.replace(punct, "")
@@ -84,26 +77,18 @@ class data_format:
             return input_str
 
         # User define function that does operation in cells
-        function = udf(lambda cell: rm_spec_chars(cell) if cell is not None else cell, StringType())
-
+        function = udf(lambda x: remove_sp_char(x) if x is not None else x, StringType())
+        # apply function on column, if it is not a validated column, just return its self
         exprs = [function(c).alias(c) if (c in columns) and (c in valid_cols) else c for c in self._df.columns]
 
         self._df = self._df.select(*exprs)
 
-        # self._add_transformation()  # checkpoint in case
         return self
 ##################################################
 
-    def remove_special_chars_regex(self, regex, columns='*'):
-        """This function remove special chars in string columns using a regex, such as: .!"#$%&/()
-        :param columns      list of names columns to be processed.
-        :param regex        string that contains the regular expression
-        columns argument can be a string or a list of strings."""
+    def clean_html(self, columns='*'):
+        # input a list of column, remove html tag for each column
 
-        # Check if columns argument must be a string or list datatype:
-        # self._assert_type_str_or_list(columns, "columns")
-
-        # Filters all string columns in dataFrame
         valid_cols = [c for (c, t) in filter(lambda t: t[1] == 'string', self._df.dtypes)]
 
         # If None or [] is provided with column parameter:
@@ -112,58 +97,67 @@ class data_format:
         else:
             assert isinstance(columns, list), "Error: columns argument must be a list!"
 
-        # Check if columns to be process are in dataframe
-        self._assert_cols_in_df(columns_provided=columns, columns_df=self._df.columns)
+        def remove_html(input_str):
+            # Remove all punctuation and control characters
+            for punct in set(input_str):
+                input_str = re.sub("'<[^<]+?>'", '', input_str)
+            return input_str
 
+        # User define function that does operation in cells
+        function = udf(lambda x: remove_html(x) if x is not None else x, StringType())
+        # apply function on column, if it is not a validated column, just return its self
+        exprs = [function(c).alias(c) if (c in columns) and (c in valid_cols) else c for c in self._df.columns]
+
+        self._df = self._df.select(*exprs)
+
+        return self
+    ################################################
+
+    def clean_rex(self, columns='*', rex):
+        # input
+            # @ a column list and remove special char column
+            # @ reg expression which is going to be removed
+        # this function is based on open resoruce optimus. Please see: https://github.com/ironmussa/Optimus
+        # input a list of column, remove specila char each column
+
+        valid_cols = [c for (c, t) in filter(lambda t: t[1] == 'string', self._df.dtypes)]
+
+        # If None or [] is provided with column parameter:
+        if columns == "*":
+            columns = self._df.schema.names
+        else:
+            assert isinstance(columns, list), "Error: columns argument must be a list!"
+        # store the wrong type of column
         col_not_valids = (set([column for column in columns]).difference(set([column for column in valid_cols])))
 
         assert (
             col_not_valids == set()), 'Error: The following columns do not have same datatype argument provided: %s' \
                                       % col_not_valids
 
-        def rm_spec_chars_regex(input_str, regex):
+        def remove_rex(input_str, rex):
             for _ in set(input_str):
-                input_str = re.sub(regex, '', input_str)
+                input_str = re.sub(rex, '', input_str)
             return input_str
             # User define function that does operation in cells
 
-        function = udf(lambda cell: rm_spec_chars_regex(cell, regex) if cell is not None else cell, StringType())
+        function = udf(lambda x: remove_rex(x, rex) if x is not None else x, StringType())
 
         exprs = [function(c).alias(c) if (c in columns) and (c in valid_cols) else c for c in self._df.columns]
 
         self._df = self._df.select(*exprs)
 
-        # self._add_transformation()  # checkpoint in case
-
-        # Returning the transformer object for able chaining operations
-        return self
-##################################################
-
-    def remove_duplicates(self, cols='*'):
-        """
-        :param cols: List of columns to make the comparison, this only  will consider this subset of columns,
-        for dropping duplicates. The default behavior will only drop the identical rows.
-        :return: Return a new DataFrame with duplicate rows removed
-        """
-        if columns == "*":
-            columns = self._df.schema.names
-        else:
-            assert isinstance(columns, list), "Error: columns argument must be a list!"
-
-        self._df = self._df.drop_duplicates(cols)
-
         return self
 
 ##################################################
 # Clustering Part:
-
-    def clustering(self, columns='*', num_cluster=2, nGram =2):
-        # input data type should be string
+    def clustering(self, columns='*', num_cluster=2, n_g=2):
+        # input data type should be string, the column name
         # let text data as string with blank space
-
+        n_gr = n_g
         data_frame_1 = self._df
         # check data type, if not string turn it into string
         valid_cols = [col for (col, typ) in filter(lambda typ: typ[1] == 'string', self._df.dtypes)]
+        # turn it into string
         if columns not in valid_cols:
             data_frame_1 = data_frame_1.withColumn(columns + '_', data_frame_1[columns].cast("string"))
             data_frame_1 = data_frame_1.drop(columns)
@@ -174,10 +168,12 @@ class data_format:
         # Token the word and do the bi-gram
         tokenizer = Tokenizer(inputCol=columns + '_split', outputCol=columns + "_token")
         data_frame_2 = tokenizer.transform(data_frame_1)
-        ngram = NGram(nGram=2, inputCol=columns + "_token", outputCol=columns + "_ngram")
+        # make features like n-gram
+        ngram = NGram(n=n_gr, inputCol=columns + "_token", outputCol=columns + "_ngram")
         ngramDataFrame = ngram.transform(data_frame_2)
         # vectorization: text map to vector
-        cv = CountVectorizer(inputCol=columns + "_ngram", outputCol="features", vocabSize=10, minDF=2.0)
+        cv = CountVectorizer(inputCol=columns + "_ngram", outputCol="features", vocabSize=10, minDF=1.0)
+        # fit the vectorization
         model = cv.fit(ngramDataFrame)
         result = model.transform(ngramDataFrame)
         # setup kmeans
