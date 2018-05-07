@@ -5,7 +5,7 @@ import pandas as pd
 
 
 
-class MissingValue:
+class missingvalue:
 
     #constructor
     def __init__(self, df):

@@ -7,8 +7,8 @@ __all__ = [
 	'scaler',
 	'data_format'
 	]
-from greenday.datetimetransformer import DateTimeTransformer
-from greenday.missingvalue import MissingValue
+from greenday.datetimetransformer import datetimetransformer
+from greenday.missingvalue import missingvalue
 from greenday.duplicates import duplicates
 from greenday.outlier import outlier
 from greenday.scaler import scaler

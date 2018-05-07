@@ -6,7 +6,7 @@ import pandas as pd
 
 
 
-class DateTimeTransformer:
+class datetimetransformer:
 
     #constructor
     def __init__(self, df):
