@@ -27,9 +27,10 @@ class data_format:
         self._df = df
 ##################################################
 
-    def show(self):
+    def show(self, n=20):
         # incase user would like to see the dataframe
-        self._df.show()
+        n_ = n
+        self._df.show(n_)
 ##################################################
 
     def clean_latin(self, columns='*'):
@@ -113,7 +114,7 @@ class data_format:
         return self
     ################################################
 
-    def clean_rex(self, columns='*', rex):
+    def clean_rex(self, columns='*', rex=''):
         # input
             # @ a column list and remove special char column
             # @ reg expression which is going to be removed

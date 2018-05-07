@@ -9,9 +9,11 @@ from data_format import data_format
 class Greenday:
     def __init__(self, df):
         self._df = df
-        self.DateTimeTransformer = DateTimeTransformer(df)
-        self.MissingValue = MissingValue(df)
-        self.data_format = data_format(df)
-        self.duplicates = duplicates(df)
-        self.outlier = outlier(df)
-        self.scaler = scaler(df)
+        self.DateTimeTransformer = DateTimeTransformer(self._df)
+        self.MissingValue = MissingValue(self._df)
+        self.data_format = data_format(self._df)
+        self.duplicates = duplicates(self._df)
+        self.outlier = outlier(self._df)
+        self.scaler = scaler(self._df)
+    # def update_df:
+    #     self._df = df
