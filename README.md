@@ -123,9 +123,9 @@ Python 3.6.5
 ***
 ### Date Format
 
-convert String type to Date type as customized
+- convert String type to Date type as customized
+- The orging table is:
 ```
->>> df3.show()
 +----------+
 |  date_str|
 +----------+
@@ -133,9 +133,10 @@ convert String type to Date type as customized
 |11/24/2008|
 |09/30/1989|
 +----------+
-
-
->>> df3.str_to_Date('date_str', 'date', stripTime=False, Inplace=False).show()
+```
+- after converting
+> ` df3.str_to_Date('date_str', 'date', stripTime=False, Inplace=False).show()`
+```
 +----------+-------------------+
 |  date_str|               date|
 +----------+-------------------+
@@ -144,8 +145,9 @@ convert String type to Date type as customized
 |09/30/1989|1989-09-30 00:00:00|
 +----------+-------------------+
 
-
->>> df3.str_to_Date('date_str', 'date', stripTime=True, Inplace=False).show()
+```
+> `df3.str_to_Date('date_str', 'date', stripTime=True, Inplace=False).show()`
+```
 +----------+----------+
 |  date_str|      date|
 +----------+----------+
@@ -153,9 +155,9 @@ convert String type to Date type as customized
 |11/24/2008|2008-11-24|
 |09/30/1989|1989-09-30|
 +----------+----------+
-
-
->>> df3.str_to_Date('date_str', 'date', stripTime=True, Inplace=True).show()
+```
+> `df3.str_to_Date('date_str', 'date', stripTime=True, Inplace=True).show()`
+```
 +----------+
 |      date|
 +----------+
@@ -163,9 +165,9 @@ convert String type to Date type as customized
 |2008-11-24|
 |1989-09-30|
 +----------+
-
-
->>> df3.str_to_Date('date_str', 'date', stripTime=False, Inplace=True).show()
+```
+> `df3.str_to_Date('date_str', 'date', stripTime=False, Inplace=True).show()`
+```
 +-------------------+
 |               date|
 +-------------------+
@@ -175,9 +177,9 @@ convert String type to Date type as customized
 +-------------------+
 ```
 
-Calculate the years until now
+- Calculate the years until now
+> `df3.age_calculator('date_str', 'age').show()`
 ```
->>> df3.age_calculator('date_str', 'age').show()
 +----------+---+
 |  date_str|age|
 +----------+---+
@@ -187,9 +189,9 @@ Calculate the years until now
 +----------+---+
 ```
 
-Split the Date column into year/month/day (Int type)
+- Split the Date column into year/month/day (Int type)
+> ` df1.Date_Spliter("date_str", "year", "month", "day").show()`
 ```
->>> df1.Date_Spliter("date_str", "year", "month", "day").show()
 +----------+----+-----+---+
 |  date_str|year|month|day|
 +----------+----+-----+---+
