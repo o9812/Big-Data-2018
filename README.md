@@ -193,7 +193,7 @@ Split the Date column into year/month/day (Int type)
 To using the text cleaning function:
 > `from Greenday import data_format`
 > `tc = data_format(df)`
-The following table containing special characters and punctuations
+< The following table containing special characters and punctuations
 ```
 +---------+-------+
 |   cities|friends|
