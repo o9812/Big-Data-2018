@@ -18,7 +18,7 @@ Python 3.6.5
 ## The way to use it
 
 1. Upload the `greenday` folder to the hdfs and the directory you're working on. 
-2. `from greenday import *`
+2. Import the package as `from greenday import *`
    Then you can use all the modules under Green Day toolkit.
 1. The input must be a `pyspark DataFrame`
 1. The default setting is the whole dataframe. Users can choose just a subset of all columns as input argument. 
@@ -190,6 +190,26 @@ Split the Date column into year/month/day (Int type)
 +----------+----+-----+---+
 ```
 ## Cleaning Special Words
+The following table containing special characters and punctuations
+```
++---------+-------+
+|   cities|friends|
++---------+-------+
+|   Bogotá|John##!|
+| New York|  M@ãrk|
+|São~Paulo|  Mãrry|
+|  ~Madrid|  4$Tám|
++---------+-------+
+```
+Apply the functions on this table would get a clean table
++--------+-------+
+|  cities|friends|
++--------+-------+
+|  Bogota|   John|
+|New York|   Mark|
+|SaoPaulo|  Marry|
+|  Madrid|   4Tam|
++--------+-------+
 
 ## Clustering
 Here is the example of clustering, the following is origin table
