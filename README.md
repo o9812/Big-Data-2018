@@ -191,10 +191,11 @@ Split the Date column into year/month/day (Int type)
 ```
 ## Text Cleaning
 - To using the text cleaning function, import from `Greenday` package
- > `from Greenday import data_format` . 
- > `tc = data_format(df)` . 
+ > `from Greenday import data_format` 
+ 
+ > `tc = data_format(df)`  
 
- The following table containing special characters and punctuations
+- The following table containing special characters and punctuations
 ```
 +---------+-------+
 |   cities|friends|
@@ -207,6 +208,7 @@ Split the Date column into year/month/day (Int type)
 ```
 - To clean all latin words through out the table, we done need to put any argument.
  > `tc.clean_clean_latin()`
+ 
  > `tc._df.show()`
 ```
 +--------+-------+
@@ -220,9 +222,10 @@ Split the Date column into year/month/day (Int type)
 ```
 - To clean punctuations for certain column: 
 > `tc.clean_clean_sp_char(["friends"])`
+
 > `tc._df.show()`
 
-We would get a clean table as following
+- We would get a clean table as following
 ```
 +--------+-------+
 |  cities|friends|
@@ -235,7 +238,12 @@ We would get a clean table as following
 ```
 
 ## Clustering
-Here is the example of clustering, the following is origin table
+- To using the clustering function, import from `Greenday` package
+ > `from Greenday import data_format` 
+ 
+ > `cl = data_format(df)`  
+
+- Here is the example of clustering, the following is origin table
 ```
 +---+------+
 |age|  name|
@@ -251,7 +259,11 @@ Here is the example of clustering, the following is origin table
 | 39|  Lily|
 +---+------+
 ```
-Predict the group
+- To do the clustering, pick up a column and put into the fucntion as argument.
+
+ > `tc.clustering("name")`
+ 
+ > `tc._df.show()`
 ```
 +---+------+----------+
 |age|  name|prediction|
@@ -267,7 +279,10 @@ Predict the group
 | 39|  Lily|         3|
 +---+------+----------+
 ```
-Show the count number each group to user, so user can determine which words should be replaced
+
+- Showing the  intermadeiate resutl to user:
+- Count number each group to user
+
 ```
 +------+----------+-----+
 |  name|prediction|count|
@@ -281,7 +296,8 @@ Show the count number each group to user, so user can determine which words shou
 |  Lily|         3|    1|
 +------+----------+-----+
 ```
-The result of replace the words
+- User can determine which words should be replaced or just leave it as before
+- The result of replace the words by mostly appearing word in each cluster
 ```
 replace the name
 +---+------+----------+------------+
