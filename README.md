@@ -23,7 +23,7 @@ Python 3.6.5
 1. The input must be a `pyspark DataFrame`
 1. The default setting is the whole dataframe. Users can choose just a subset of all columns as input argument. 
 
-
+***
 ### Missing Value
 represent an overview of the percentage of missing values
 ```
@@ -189,7 +189,10 @@ Split the Date column into year/month/day (Int type)
 |2020-11-30|2020|   11| 30|
 +----------+----+-----+---+
 ```
-## Cleaning Special Words
+## Text Cleaning
+To using the text cleaning function:
+> `from Greenday import data_format`
+> `tc = data_format(df)`
 The following table containing special characters and punctuations
 ```
 +---------+-------+
@@ -201,7 +204,24 @@ The following table containing special characters and punctuations
 |  ~Madrid|  4$Tám|
 +---------+-------+
 ```
-Apply the functions on this table would get a clean table
+To clean all latin words through out the table, we done need to put any argument.
+> `tc.clean_clean_latin()`
+> `tc._df.show()`
+```
++--------+-------+
+|  cities|friends|
++--------+-------+
+|  Bogota|John##!|
+|New York|  M@ark|
+|SaoPaulo| Marr!y|
+|  Madrid|  4$Tam|
++--------+-------+
+```
+To clean punctuations for certain column: 
+> `tc.clean_clean_sp_char(["friends"])`
+> `tc._df.show()`
+We would get a clean table as following
+```
 +--------+-------+
 |  cities|friends|
 +--------+-------+
@@ -210,6 +230,7 @@ Apply the functions on this table would get a clean table
 |SaoPaulo|  Marry|
 |  Madrid|   4Tam|
 +--------+-------+
+```
 
 ## Clustering
 Here is the example of clustering, the following is origin table
