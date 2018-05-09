@@ -25,9 +25,15 @@ Python 3.6.5
 
 ***
 ### Missing Value
-represent an overview of the percentage of missing values
+- To using the clustering function, import from `Greenday` package
+ > `from Greenday import missingvalue` 
+ 
+ > `df = missingvalue(df)`  
+
+- represent an overview of the percentage of missing values
+> `df.na_percent()`
+
 ```
->>> df.na_percent()
                      column name missing value percent
 0                      RequestID                    0%
 1                      StartDate                    0%
@@ -52,9 +58,9 @@ represent an overview of the percentage of missing values
 20        AdditionalDescription3                  100%
 ```
 
-impute missing values or its equivalent by mean or median
+- impute missing values or its equivalent by mean or median
+> `df1.show()`
 ```
->>> df1.show()
 +-------+----+------+------+-----+
 |   Name| Age|Height|Weight|State|
 +-------+----+------+------+-----+
@@ -66,8 +72,10 @@ impute missing values or its equivalent by mean or median
 |Francis|  33|  null|    65|  999|
 | George|null|   190|    90|   NY|
 +-------+----+------+------+-----+
-
->>> df1.na_imputer('median','Weight','99','Weight',Inplace=True).na_imputer('mean',['Age','Height'],None,['Age','Height'],True).show()
+```
+- Show the imputer
+> `df1.na_imputer('median','Weight','99','Weight',Inplace=True).na_imputer('mean',['Age','Height'],None,['Age','Height'],True).show()`
+```
 +-------+----+------+------+-----+
 |   Name| Age|Height|Weight|State|
 +-------+----+------+------+-----+
@@ -80,9 +88,11 @@ impute missing values or its equivalent by mean or median
 | George|28.2|   190|    90|   NY|
 +-------+----+------+------+-----+
 ```
-replace user-defined missing values, e.g.null or '999', etc.
+- It would replace user-defined missing values, e.g.null or '999', etc.
+> `df2.replace_na_value(28.4, columns="Age").replace_value('999','NY',"State").show()`
+- The origin talbe is 
+> `df2.show()`
 ```
->>> df2.show()
 +-------+----+-----+
 |   Name| Age|State|
 +-------+----+-----+
@@ -95,7 +105,9 @@ replace user-defined missing values, e.g.null or '999', etc.
 | George|null|   NY|
 +-------+----+-----+
 
->>> df2.replace_na_value(28.4, columns="Age").replace_value('999','NY',"State").show()
+```
+- After replace the valuses
+```
 +-------+----+-----+
 |   Name| Age|State|
 +-------+----+-----+
@@ -108,7 +120,7 @@ replace user-defined missing values, e.g.null or '999', etc.
 | George|28.4|   NY|
 +-------+----+-----+
 ```
-
+***
 ### Date Format
 
 convert String type to Date type as customized
@@ -189,6 +201,7 @@ Split the Date column into year/month/day (Int type)
 |2020-11-30|2020|   11| 30|
 +----------+----+-----+---+
 ```
+***
 ## Text Cleaning
 - To using the text cleaning function, import from `Greenday` package
  > `from Greenday import data_format` 
@@ -236,7 +249,7 @@ Split the Date column into year/month/day (Int type)
 |  Madrid|   4Tam|
 +--------+-------+
 ```
-
+***
 ## Clustering
 - To using the clustering function, import from `Greenday` package
  > `from Greenday import data_format` 
