@@ -27,6 +27,8 @@ Python 3.6.5
 ### Missing Value
 represent an overview of the percentage of missing values
 ```
+>>> from greenday import missingvalue
+>>> df = missingvalue(data)
 >>> df.na_percent()
                      column name missing value percent
 0                      RequestID                    0%
@@ -54,6 +56,7 @@ represent an overview of the percentage of missing values
 
 impute missing values or its equivalent by mean or median
 ```
+>>> df1 = missingvalue(data2)
 >>> df1.show()
 +-------+----+------+------+-----+
 |   Name| Age|Height|Weight|State|
@@ -82,6 +85,7 @@ impute missing values or its equivalent by mean or median
 ```
 replace user-defined missing values, e.g.null or '999', etc.
 ```
+>>> df2 = missingvalue(data3)
 >>> df2.show()
 +-------+----+-----+
 |   Name| Age|State|
@@ -113,6 +117,8 @@ replace user-defined missing values, e.g.null or '999', etc.
 
 convert String type to Date type as customized
 ```
+>>> from greenday import DateTimeTransformer
+>>> df3 = DateTimeTransformer(data4)
 >>> df3.show()
 +----------+
 |  date_str|
@@ -121,7 +127,6 @@ convert String type to Date type as customized
 |11/24/2008|
 |09/30/1989|
 +----------+
-
 
 >>> df3.str_to_Date('date_str', 'date', stripTime=False, Inplace=False).show()
 +----------+-------------------+
@@ -132,7 +137,6 @@ convert String type to Date type as customized
 |09/30/1989|1989-09-30 00:00:00|
 +----------+-------------------+
 
-
 >>> df3.str_to_Date('date_str', 'date', stripTime=True, Inplace=False).show()
 +----------+----------+
 |  date_str|      date|
@@ -142,7 +146,6 @@ convert String type to Date type as customized
 |09/30/1989|1989-09-30|
 +----------+----------+
 
-
 >>> df3.str_to_Date('date_str', 'date', stripTime=True, Inplace=True).show()
 +----------+
 |      date|
@@ -151,7 +154,6 @@ convert String type to Date type as customized
 |2008-11-24|
 |1989-09-30|
 +----------+
-
 
 >>> df3.str_to_Date('date_str', 'date', stripTime=False, Inplace=True).show()
 +-------------------+
@@ -177,7 +179,7 @@ Calculate the years until now
 
 Split the Date column into year/month/day (Int type)
 ```
->>> df1.Date_Spliter("date_str", "year", "month", "day").show()
+>>> df3.Date_Spliter("date_str", "year", "month", "day").show()
 +----------+----+-----+---+
 |  date_str|year|month|day|
 +----------+----+-----+---+
@@ -190,68 +192,4 @@ Split the Date column into year/month/day (Int type)
 +----------+----+-----+---+
 ```
 ## Cleaning Special Words
-
 ## Clustering
-Here is the example of clustering, the following is origin table
-```
-+---+------+
-|age|  name|
-+---+------+
-| 15|  John|
-| 17|  John|
-| 12|  Jahn|
-| 16|Johnny|
-| 15| Alice|
-| 32| Alice|
-| 32|  Alux|
-| 32|  Alex|
-| 39|  Lily|
-+---+------+
-```
-Predict the group
-```
-+---+------+----------+
-|age|  name|prediction|
-+---+------+----------+
-| 32|  Alux|         0|
-| 32|  Alex|         0|
-| 15|  John|         1|
-| 17|  John|         1|
-| 12|  Jahn|         1|
-| 16|Johnny|         1|
-| 32| Alice|         2|
-| 15| Alice|         2|
-| 39|  Lily|         3|
-+---+------+----------+
-```
-Show the count number each group to user, so user can determine which words should be replaced
-```
-+------+----------+-----+
-|  name|prediction|count|
-+------+----------+-----+
-|  Alex|         0|    1|
-|  Alex|         0|    1|
-|  John|         1|    2|
-|  Jahn|         1|    1|
-|Johnny|         1|    1|
-| Alice|         2|    2|
-|  Lily|         3|    1|
-+------+----------+-----+
-```
-The result of replace the words
-```
-replace the name
-+---+------+----------+------------+
-|age|  name|prediction|replace_name|
-+---+------+----------+------------+
-| 32|  Alux|         0|        Alux|
-| 32|  Alex|         0|        Alux|
-| 15|  John|         1|        John|
-| 17|  John|         1|        John|
-| 12|  Jahn|         1|        John|
-| 16|Johnny|         1|        John|
-| 32| Alice|         2|       Alice|
-| 15| Alice|         2|       Alice|
-| 39|  Lily|         3|        Lily|
-+---+------+----------+------------+
-```
