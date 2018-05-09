@@ -30,7 +30,7 @@ Python 3.6.5
  
  > `df = missingvalue(df)`  
 
-- represent an overview of the percentage of missing values
+- Represent an overview of the percentage of missing values
 > `df.na_percent()`
 
 ```
@@ -58,7 +58,7 @@ Python 3.6.5
 20        AdditionalDescription3                  100%
 ```
 
-- impute missing values or its equivalent by mean or median
+- Impute missing values or its equivalent by mean or median
 > `df.show()`
 ```
 +-------+----+------+------+-----+
@@ -106,7 +106,7 @@ Python 3.6.5
 +-------+----+-----+
 
 ```
-- After replace the valuses
+- After replacing the valuses
 ```
 +-------+----+-----+
 |   Name| Age|State|
@@ -124,7 +124,7 @@ Python 3.6.5
 ***
 ### Date Format
 
-- convert String type to Date type as customized
+- Convert String type to Date type as customized
 - The orging table is:
 ```
 +----------+
@@ -135,7 +135,7 @@ Python 3.6.5
 |09/30/1989|
 +----------+
 ```
-- after converting
+- After converting, keep time
 > ` df.str_to_Date('date_str', 'date', stripTime=False, Inplace=False).show()`
 ```
 +----------+-------------------+
@@ -147,6 +147,7 @@ Python 3.6.5
 +----------+-------------------+
 
 ```
+-  After converting, without time
 > `df.str_to_Date('date_str', 'date', stripTime=True, Inplace=False).show()`
 ```
 +----------+----------+
@@ -157,6 +158,7 @@ Python 3.6.5
 |09/30/1989|1989-09-30|
 +----------+----------+
 ```
+-  After converting, replace the origin column, without time
 > `df.str_to_Date('date_str', 'date', stripTime=True, Inplace=True).show()`
 ```
 +----------+
@@ -167,6 +169,7 @@ Python 3.6.5
 |1989-09-30|
 +----------+
 ```
+-  After converting, replace the origin column, with time
 > `df.str_to_Date('date_str', 'date', stripTime=False, Inplace=True).show()`
 ```
 +-------------------+
