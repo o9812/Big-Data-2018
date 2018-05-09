@@ -16,13 +16,13 @@ PySpark spark/2.3.0
 Python 3.6.5
 ```
 ## The way to use it
-```
+
 + Upload the `greenday` folder to the hdfs and the directory you're working on. 
 + `from greenday import *`
    Then you can use all the modules under Green Day toolkit.
 + The input must be a `pyspark DataFrame`
 + The default setting is the whole dataframe. Users can choose just a subset of all columns as input argument. 
-```
+
 
 ### Missing Value
 represent an overview of the percentage of missing values
