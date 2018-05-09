@@ -333,3 +333,124 @@ replace the name
 | 39|  Lily|         3|        Lily|
 +---+------+----------+------------+
 ```
+***
+## Outlier
+- To using the outlier function, import from `Greenday` package
+ > `from Greenday import outlier` 
+ 
+ > `out = outlier(df)`  
+
+- Here is the example of outlier, the following is origin table
+```
++----+----+----+
+|col1|col2|col3|
++----+----+----+
+|   1|   1|   1|
+|   1|   1|   1|
+|   2|   1|   1|
+|   2| 200| 200|
+| 200|1000|1000|
++----+----+----+
+```
+- delete outlier
+> `out.delete_outlier(['col1']).show()`
+```
++----+----+----+
+|col1|col2|col3|
++----+----+----+
+|   1|   1|   1|
+|   1|   1|   1|
+|   2|   1|   1|
+|   2| 200| 200|
++----+----+----+
+```
+- replace outlier with mean value
+> `out.replace_outlier(['col1'],replacement='mean').show()`
+```
++----+----+----+
+|col1|col2|col3|
++----+----+----+
+|   1|   1|   1|
+|   1|   1|   1|
+|   2|   1|   1|
+|   2|   1| 200|
+|   1|   1|1000|
++----+----+----+
+```
+***
+## Outlier
+- To using the duplicates function, import from `Greenday` package
+ > `from Greenday import duplicates` 
+ 
+ > `dup = duplicates(df)`  
+
+- original dataframe
+```
++----+----+----+
+|col1|col2|col3|
++----+----+----+
+|   1|   1|   1|
+|   1|   1|   1|
+|   2|   1|   1|
+|   2| 200| 200|
+| 200|1000|1000|
++----+----+----+
+```
+- remove duplicated rows
+> `dup.remove_duplicates_rows().show()`
+```
++----+----+----+
+|col1|col2|col3|
++----+----+----+
+| 200|1000|1000|
+|   2| 200| 200|
+|   1|   1|   1|
+|   2|   1|   1|
++----+----+----+
+```
+- remove duplicated columns
+> `dup.remove_duplicates_cols().show()`
+```
++----+----+
+|col1|col2|
++----+----+
+|   1|   1|
+|   1|   1|
+|   2|   1|
+|   2| 200|
+| 200|1000|
++----+----+
+```
+## Scaler
+- To using the scaler function, import from `Greenday` package
+ > `from Greenday import scaler` 
+ 
+ > `sca = scaler(df)`  
+
+- original dataframe
+```
++----+----+----+
+|col1|col2|col3|
++----+----+----+
+|   1|   1|   1|
+|   1|   1|   1|
+|   2|   1|   1|
+|   2| 200| 200|
+| 200|1000|1000|
++----+----+----+
+```
+- after conduct three ways of scaling method
+> `sca.maxabs_scale(['col1']).show()`
+> `sca.minmax_scale(['col2'],0,2).show()`
+> `sca.standard_scale(['col3']).show()`
+```
++----+----+----+-----------+------------------+--------------------+
+|col1|col2|col3|col1_scaled|       col2_scaled|         col3_scaled|
++----+----+----+-----------+------------------+--------------------+
+|   1|   1|   1|      0.005|               0.0|0.002308537537423719|
+|   1|   1|   1|      0.005|               0.0|0.002308537537423719|
+|   2|   1|   1|       0.01|               0.0|0.002308537537423719|
+|   2| 200| 200|       0.01|0.3983983983983984|  0.4617075074847438|
+| 200|1000|1000|        1.0|               2.0|   2.308537537423719|
++----+----+----+-----------+------------------+--------------------+
+```
