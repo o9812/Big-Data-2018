@@ -21,7 +21,7 @@ Python 3.6.5
 2. `from greenday import *`
    Then you can use all the modules under Green Day toolkit.
 1. The input must be a `pyspark DataFrame`
-1, The default setting is the whole dataframe. Users can choose just a subset of all columns as input argument. 
+1. The default setting is the whole dataframe. Users can choose just a subset of all columns as input argument. 
 
 
 ### Missing Value
@@ -189,3 +189,5 @@ Split the Date column into year/month/day (Int type)
 |2020-11-30|2020|   11| 30|
 +----------+----+-----+---+
 ```
+## Cleaning Special Words
+## Clustering
