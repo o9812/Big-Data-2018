@@ -12,16 +12,16 @@ Green Day is a data cleaning tookit for Spark. It's developed via Python and tak
 
 ## Prerequisites
 ```
-PySpark 2.1.0
+PySpark spark/2.3.0
 Python 3.6.5
 ```
 ## The way to use it
 ```
-1) Upload the greenday folder to the hdfs and the directory you're working on. 
-2) from greenday import *
++ Upload the `greenday` folder to the hdfs and the directory you're working on. 
++ `from greenday import *`
    Then you can use all the modules under Green Day toolkit.
-3) The input must be a pyspark DataFrame
-4) The default setting is the whole dataframe. Users can choose just a subset of all columns as input argument. 
++ The input must be a `pyspark DataFrame`
++ The default setting is the whole dataframe. Users can choose just a subset of all columns as input argument. 
 ```
 
 ### Missing Value
