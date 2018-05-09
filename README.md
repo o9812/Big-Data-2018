@@ -6,9 +6,9 @@ Green Day is a data cleaning tookit for Spark. It's developed via Python and tak
 * Date Format
 * Text Cleaning
 * Clustering
-* Outlier Detection
+* Outlier 
 * Duplicative Removing
-* Normalization & Scaling
+* Scaling
 
 ## Prerequisites
 ```
