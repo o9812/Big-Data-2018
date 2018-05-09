@@ -21,6 +21,9 @@ from pyspark.sql.types import StringType
 
 
 class data_format:
+    """
+    initial datafram to data_format class
+    """
 
     def __init__(self, df):
         # initial dataframe
@@ -33,7 +36,15 @@ class data_format:
 ##################################################
 
     def clean_latin(self, columns='*'):
+        """
+        input:
+            @columns: a list or a string of the column(s) name in original dataframe, the columns needs to be converted
+
+        output:
+            @sefl.dataframe: a clean dataframe without latin words
         # this function is based on open resoruce optimus. Please see: https://github.com/ironmussa/Optimus
+        """
+
         # input a list of column
         valid_cols = [col for (col, typ) in filter(lambda typ: typ[1] == 'string', self._df.dtypes)]
 
@@ -58,7 +69,14 @@ class data_format:
 
 ##################################################
     def clean_sp_char(self, columns='*'):
+        """
+        input:
+            @columns: a list or a string of the column(s) name in original dataframe, the columns needs to be converted
+        output:
+            @sefl.dataframe: a clean dataframe without punctuations
         # this function is based on open resoruce optimus. Please see: https://github.com/ironmussa/Optimus
+        """
+
         # input a list of column, remove specila char each column
 
         valid_cols = [c for (c, t) in filter(lambda t: t[1] == 'string', self._df.dtypes)]
@@ -87,7 +105,12 @@ class data_format:
 ##################################################
 
     def clean_html(self, columns='*'):
-        # input a list of column, remove html tag for each column
+         """
+        input:
+            @columns: a list or a string of the column(s) name in original dataframe, the columns needs to be converted
+        output:
+            @sefl.dataframe: a clean dataframe without html tag
+        """
 
         valid_cols = [c for (c, t) in filter(lambda t: t[1] == 'string', self._df.dtypes)]
 
@@ -114,12 +137,12 @@ class data_format:
     ################################################
 
     def clean_rex(self, rex, columns='*'):
-        # input
-            # @ a column list and remove special char column
-            # @ reg expression which is going to be removed
-        # this function is based on open resoruce optimus. Please see: https://github.com/ironmussa/Optimus
-        # input a list of column, remove specila char each column
-
+        """
+        input
+            @ a column list and remove special char column
+            @ reg expression which is going to be removed
+        this function is based on open resoruce optimus. Please see: https://github.com/ironmussa/Optimus
+        """
         valid_cols = [c for (c, t) in filter(lambda t: t[1] == 'string', self._df.dtypes)]
 
         # If None or [] is provided with column parameter:
@@ -151,7 +174,15 @@ class data_format:
 ##################################################
 # Clustering Part:
     def clustering(self, columns='*', num_cluster=2, n_g=2):
-        # input data type should be string, the column name
+        """
+        input
+            @ a column list and remove special char column
+            @ number of cluster
+            @ number of n_gram
+        return:
+            @ a data frame with clustering column
+        """
+
         # let text data as string with blank space
         n_gr = n_g
         data_frame_1 = self._df
@@ -162,6 +193,7 @@ class data_format:
             data_frame_1 = data_frame_1.withColumn(columns + '_', data_frame_1[columns].cast("string"))
             data_frame_1 = data_frame_1.drop(columns)
             data_frame_1 = data_frame_1.withColumnRenamed(columns + '_', columns)
+
         # make the string toknizable
         udf_space = udf(lambda z: " ".join(z))
         data_frame_1 = data_frame_1.withColumn(columns + '_split', udf_space(columns)).orderBy(columns)
@@ -176,6 +208,8 @@ class data_format:
         # fit the vectorization
         model = cv.fit(ngramDataFrame)
         result = model.transform(ngramDataFrame)
+
+
         # setup kmeans
         kmeans = KMeans().setK(num_cluster).setSeed(1)
         model_kmean = kmeans.fit(result)
@@ -189,6 +223,7 @@ class data_format:
         df = df.withColumnRenamed('prediction', 'cluster')
         temp = temp.withColumnRenamed('count', 'count in cluster')
         temp.show()
+
         # show the cluster number
         window = Window.partitionBy("cluster").orderBy(col("count in cluster").desc())
         test = (temp.withColumn('row_num', F.row_number().over(window)).where(F.col('row_num') == 1).select(columns, 'cluster'))
@@ -225,7 +260,9 @@ class data_format:
             data_frame_replace = data_frame_replace.withColumnRenamed("replace_" + columns, columns)
 
         data_frame_replace = data_frame_replace.drop('cluster')
+        #  replace the origin dataframe
         self._df = data_frame_replace
+        #  show result to users
         self._df.show()
         return self
 
