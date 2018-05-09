@@ -191,10 +191,10 @@ Split the Date column into year/month/day (Int type)
 ```
 ## Text Cleaning
 - To using the text cleaning function, import from `Greenday` package
-> `from Greenday import data_format`
-> `tc = data_format(df)`
+ > `from Greenday import data_format`
+ > `tc = data_format(df)`
 
-The following table containing special characters and punctuations
+ The following table containing special characters and punctuations
 ```
 +---------+-------+
 |   cities|friends|
@@ -206,8 +206,8 @@ The following table containing special characters and punctuations
 +---------+-------+
 ```
 - To clean all latin words through out the table, we done need to put any argument.
-> `tc.clean_clean_latin()`
-> `tc._df.show()`
+ > `tc.clean_clean_latin()`
+ > `tc._df.show()`
 ```
 +--------+-------+
 |  cities|friends|
