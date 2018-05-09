@@ -441,7 +441,9 @@ replace the name
 ```
 - after conduct three ways of scaling method
 > `sca.maxabs_scale(['col1']).show()`
+
 > `sca.minmax_scale(['col2'],0,2).show()`
+
 > `sca.standard_scale(['col3']).show()`
 ```
 +----+----+----+-----------+------------------+--------------------+
