@@ -190,4 +190,68 @@ Split the Date column into year/month/day (Int type)
 +----------+----+-----+---+
 ```
 ## Cleaning Special Words
+
 ## Clustering
+Here is the example of clustering, the following is origin table
+```
++---+------+
+|age|  name|
++---+------+
+| 15|  John|
+| 17|  John|
+| 12|  Jahn|
+| 16|Johnny|
+| 15| Alice|
+| 32| Alice|
+| 32|  Alux|
+| 32|  Alex|
+| 39|  Lily|
++---+------+
+```
+Predict the group
+```
++---+------+----------+
+|age|  name|prediction|
++---+------+----------+
+| 32|  Alux|         0|
+| 32|  Alex|         0|
+| 15|  John|         1|
+| 17|  John|         1|
+| 12|  Jahn|         1|
+| 16|Johnny|         1|
+| 32| Alice|         2|
+| 15| Alice|         2|
+| 39|  Lily|         3|
++---+------+----------+
+```
+Show the count number each group to user, so user can determine which words should be replaced
+```
++------+----------+-----+
+|  name|prediction|count|
++------+----------+-----+
+|  Alex|         0|    1|
+|  Alex|         0|    1|
+|  John|         1|    2|
+|  Jahn|         1|    1|
+|Johnny|         1|    1|
+| Alice|         2|    2|
+|  Lily|         3|    1|
++------+----------+-----+
+```
+The result of replace the words
+```
+replace the name
++---+------+----------+------------+
+|age|  name|prediction|replace_name|
++---+------+----------+------------+
+| 32|  Alux|         0|        Alux|
+| 32|  Alex|         0|        Alux|
+| 15|  John|         1|        John|
+| 17|  John|         1|        John|
+| 12|  Jahn|         1|        John|
+| 16|Johnny|         1|        John|
+| 32| Alice|         2|       Alice|
+| 15| Alice|         2|       Alice|
+| 39|  Lily|         3|        Lily|
++---+------+----------+------------+
+```
