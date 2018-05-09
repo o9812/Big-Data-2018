@@ -59,7 +59,7 @@ Python 3.6.5
 ```
 
 - impute missing values or its equivalent by mean or median
-> `df1.show()`
+> `df.show()`
 ```
 +-------+----+------+------+-----+
 |   Name| Age|Height|Weight|State|
@@ -74,7 +74,7 @@ Python 3.6.5
 +-------+----+------+------+-----+
 ```
 - Show the imputer
-> `df1.na_imputer('median','Weight','99','Weight',Inplace=True).na_imputer('mean',['Age','Height'],None,['Age','Height'],True).show()`
+> `df.na_imputer('median','Weight','99','Weight',Inplace=True).na_imputer('mean',['Age','Height'],None,['Age','Height'],True).show()`
 ```
 +-------+----+------+------+-----+
 |   Name| Age|Height|Weight|State|
@@ -89,9 +89,9 @@ Python 3.6.5
 +-------+----+------+------+-----+
 ```
 - It would replace user-defined missing values, e.g.null or '999', etc.
-> `df2.replace_na_value(28.4, columns="Age").replace_value('999','NY',"State").show()`
+> `df.replace_na_value(28.4, columns="Age").replace_value('999','NY',"State").show()`
 - The origin talbe is 
-> `df2.show()`
+> `df.show()`
 ```
 +-------+----+-----+
 |   Name| Age|State|
@@ -136,7 +136,7 @@ Python 3.6.5
 +----------+
 ```
 - after converting
-> ` df3.str_to_Date('date_str', 'date', stripTime=False, Inplace=False).show()`
+> ` df.str_to_Date('date_str', 'date', stripTime=False, Inplace=False).show()`
 ```
 +----------+-------------------+
 |  date_str|               date|
@@ -147,7 +147,7 @@ Python 3.6.5
 +----------+-------------------+
 
 ```
-> `df3.str_to_Date('date_str', 'date', stripTime=True, Inplace=False).show()`
+> `df.str_to_Date('date_str', 'date', stripTime=True, Inplace=False).show()`
 ```
 +----------+----------+
 |  date_str|      date|
@@ -157,7 +157,7 @@ Python 3.6.5
 |09/30/1989|1989-09-30|
 +----------+----------+
 ```
-> `df3.str_to_Date('date_str', 'date', stripTime=True, Inplace=True).show()`
+> `df.str_to_Date('date_str', 'date', stripTime=True, Inplace=True).show()`
 ```
 +----------+
 |      date|
@@ -167,7 +167,7 @@ Python 3.6.5
 |1989-09-30|
 +----------+
 ```
-> `df3.str_to_Date('date_str', 'date', stripTime=False, Inplace=True).show()`
+> `df.str_to_Date('date_str', 'date', stripTime=False, Inplace=True).show()`
 ```
 +-------------------+
 |               date|
@@ -179,7 +179,7 @@ Python 3.6.5
 ```
 
 - Calculate the years until now
-> `df3.age_calculator('date_str', 'age').show()`
+> `df.age_calculator('date_str', 'age').show()`
 ```
 +----------+---+
 |  date_str|age|
@@ -191,7 +191,7 @@ Python 3.6.5
 ```
 
 - Split the Date column into year/month/day (Int type)
-> ` df1.Date_Spliter("date_str", "year", "month", "day").show()`
+> ` df.Date_Spliter("date_str", "year", "month", "day").show()`
 ```
 +----------+----+-----+---+
 |  date_str|year|month|day|
