@@ -13,7 +13,7 @@ Green Day is a data cleaning tookit for Spark. It's developed via Python and tak
 ## Prerequisites
 ```
 PySpark 2.1.0
-Python 3
+Python 3.6.5
 ```
 ## The way to use it
 ```
